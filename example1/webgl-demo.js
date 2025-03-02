@@ -3,8 +3,39 @@ main();
 //
 // start here
 //
+
+function initShaderProgram(gl, vsSource, fsSource) {
+  /* 
+    calls the two shaders, creates a shader program and attaches the
+    shaders to it and finally links it.
+
+    Check the status of the program and if not successfull
+    display the log information
+    */
+
+  const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
+  const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
+
+  const shaderProgram = gl.createProgram();
+  gl.attachShader(shaderProgram, vertexShader);
+  gl.attachShader(shaderProgram, fragmentShader);
+  gl.linkProgram(shaderProgram);
+
+  if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+    alert(
+      `Unable to initialize shader program ${gl.getProgramInfoLog(
+        shaderProgram
+      )}`
+    );
+
+    return null;
+  }
+
+  return shaderProgram;
+}
 function main() {
   const canvas = document.querySelector("#gl-canvas");
+
   // Initialize the GL context
   const gl = canvas.getContext("webgl");
 
