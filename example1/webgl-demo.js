@@ -91,4 +91,17 @@ function main() {
         gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
     }
   `;
+
+  const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
+
+  const programInfo = {
+    program: shaderProgram,
+    attribLocations: {
+      vertexPosition: gl.getAttribLocation(shaderProgram, "aVertexPosition"),
+    },
+    uniformLocations: {
+      projectionMatrix: gl.uniformLocation(shaderProgram, "uProjectMatrix"),
+      modelViewMatrix: gl.uniformLocation(shaderProgram, "uModelMatrix"),
+    },
+  };
 }
