@@ -33,6 +33,28 @@ function initShaderProgram(gl, vsSource, fsSource) {
 
   return shaderProgram;
 }
+
+function loadShader(gl, type, source) {
+  /*
+    creates a shader of the specified type
+    sends source to shader object
+    compile the shader
+    */
+
+  const shader = gl.createShader(type);
+
+  gl.shaderSource(shader, source);
+
+  gl.compileShader(shader);
+
+  if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    alert(`Error while compiling shader ${gl.getShaderInfoLog}`);
+    gl.deleteShader(shader);
+    return null;
+  }
+
+  return shader;
+}
 function main() {
   const canvas = document.querySelector("#gl-canvas");
 
