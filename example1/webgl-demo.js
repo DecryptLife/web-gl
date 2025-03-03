@@ -55,6 +55,15 @@ function loadShader(gl, type, source) {
 
   return shader;
 }
+
+function initBuffers(gl) {
+  const positionBuffer = initPositionBuffer(gl);
+
+  return {
+    position: positionBuffer,
+  };
+}
+
 function main() {
   const canvas = document.querySelector("#gl-canvas");
 
