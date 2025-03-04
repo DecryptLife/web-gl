@@ -124,3 +124,27 @@ function loadShader(gl, type, source) {
 
   return shader;
 }
+
+/* 
+
+  SETUP SUMMARY
+  1. Get the canvas element from HTML and gl context
+  2. Setup the vertex and fragment shader program (vsSource & fsSource)
+  3. Initialize shader program 
+      - load both shaders loadShader(gl, gl.SHADER_TYPE, program)
+          > create shader, send source to shader and compile the shader
+      - create a shader program and attach both shaders to it
+      - link the shader program to gl & return shader program
+  4. Create an object programInfo which contains details of things required for shader program
+      - program: shader program
+      - attribLocations: vertex postion
+      - uniformLocations: projectionMatrix & modelViewMatrix
+  5. Initialize buffers
+      - create a buffer & bind the buffer to gl
+      - create an array of positions for the shape
+      - finally buffer the data to gl => gl.bufferData(bufferType, positions, drawingType)
+  6. Draw Scenes
+  
+
+
+*/
