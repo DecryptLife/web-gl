@@ -144,7 +144,16 @@ function loadShader(gl, type, source) {
       - create an array of positions for the shape
       - finally buffer the data to gl => gl.bufferData(bufferType, positions, drawingType)
   6. Draw Scenes
-  
+      - Preparing WebGL for drawing
+      - Clear the buffers
+      - Create the perspective matrix
+      - Setting model view matrix
+      - Configuring the shader attributes
+        - setPositionAttribute : tells how to extract vertex positions from vertex attribute
+      - set the shader program and unifroms needed for the drawing
+      - finally draw the object
+
+
 
 
 */
