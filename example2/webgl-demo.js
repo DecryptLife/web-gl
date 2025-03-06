@@ -10,6 +10,10 @@ main();
 // start here
 //
 
+//
+// Initialize a shader program, so WebGL knows how to draw our data
+//
+
 function main() {
   const canvas = document.querySelector("#glcanvas");
   // Initialize the GL context
@@ -30,25 +34,25 @@ function main() {
 
   // Vertex shader program
   const vsSource = `
-    attribute vec4 aVertexPosition;
-    attribute vec4 aVertexColor;
-
-    uniform mat4 uModelViewMatrix;
-    uniform mat4 uProjectionMatrix;
-
-    varying lowp vec4 vColor;
-    void main() {
-      gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
-      vColor = aVertexColor;
-    }
-`;
+      attribute vec4 aVertexPosition;
+      attribute vec4 aVertexColor;
+  
+      uniform mat4 uModelViewMatrix;
+      uniform mat4 uProjectionMatrix;
+  
+      varying lowp vec4 vColor;
+      void main() {
+        gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+        vColor = aVertexColor;
+      }
+  `;
 
   const fsSource = `
-    varying lowp vec4 vColor;
-    void main() {
-      gl_FragColor = vColor;
-    }
-  `;
+      varying lowp vec4 vColor;
+      void main() {
+        gl_FragColor = vColor;
+      }
+    `;
 
   // Initialize a shader program; this is where all the lighting
   // for the vertices and so forth is established.
@@ -76,12 +80,23 @@ function main() {
   // objects we'll be drawing.
   const buffers = initBuffers(gl);
 
-  drawScene(gl, programInfo, buffers);
+  // Draw the scene
+  let then = 0;
+
+  // Draw the scene repeatedly
+  function render(now) {
+    now *= 0.001; // convert to seconds
+    deltaTime = now - then;
+    then = now;
+
+    drawScene(gl, programInfo, buffers, squareRotation);
+    squareRotation += deltaTime;
+
+    requestAnimationFrame(render);
+  }
+  requestAnimationFrame(render);
 }
 
-//
-// Initialize a shader program, so WebGL knows how to draw our data
-//
 function initShaderProgram(gl, vsSource, fsSource) {
   const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
   const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
