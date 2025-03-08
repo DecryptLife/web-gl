@@ -15,7 +15,7 @@ function initColorBuffer(gl) {
     0.0,
     0.0,
     1.0, // white
-    0.4,
+    0.0,
     0.6,
     0.3,
     1.0, // red
