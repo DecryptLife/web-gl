@@ -8,7 +8,7 @@ function initBuffers(gl) {
   return {
     position: positionBuffer,
     color: colorBuffer,
-    index: indexBuffer,
+    indices: indexBuffer,
   };
 }
 
