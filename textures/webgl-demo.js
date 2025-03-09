@@ -35,22 +35,25 @@ function main() {
   // Vertex shader program
   const vsSource = `
       attribute vec4 aVertexPosition;
-      attribute vec4 aVertexColor;
+      attribute vec2 aTextureCoord;
   
       uniform mat4 uModelViewMatrix;
       uniform mat4 uProjectionMatrix;
   
-      varying lowp vec4 vColor;
+      varying highp vec2 vTextureCoord;
       void main() {
         gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
-        vColor = aVertexColor;
+        vTextureCoord = aTextureCoord;
       }
   `;
 
   const fsSource = `
-      varying lowp vec4 vColor;
+      varying highp vec2 vTextureCoord;
+
+      uniform sampler2D uSampler;
+
       void main() {
-        gl_FragColor = vColor;
+        gl_FragColor = texture2D(uSampler, vTextureCoord);
       }
     `;
 
@@ -65,7 +68,7 @@ function main() {
     program: shaderProgram,
     attribLocations: {
       vertexPosition: gl.getAttribLocation(shaderProgram, "aVertexPosition"),
-      vertexColor: gl.getAttribLocation(shaderProgram, "aVertexColor"),
+      textureCoord: gl.getAttribLocation(shaderProgram, "aTextureCoord"),
     },
     uniformLocations: {
       projectionMatrix: gl.getUniformLocation(
@@ -73,12 +76,18 @@ function main() {
         "uProjectionMatrix"
       ),
       modelViewMatrix: gl.getUniformLocation(shaderProgram, "uModelViewMatrix"),
+      uSampler: gl.getUniformLocation(shaderProgram, "uSampler"),
     },
   };
 
   // Here's where we call the routine that builds all the
   // objects we'll be drawing.
   const buffers = initBuffers(gl);
+
+  // load texture
+  const texture = loadTexture(gl, "cubetexture.png");
+  // flip image pixels into bottom-to-top order that WebGL expects
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 
   // Draw the scene
   let then = 0;
@@ -89,7 +98,7 @@ function main() {
     deltaTime = now - then;
     then = now;
 
-    drawScene(gl, programInfo, buffers, cubeRotation);
+    drawScene(gl, programInfo, buffers, texture, cubeRotation);
     cubeRotation += deltaTime;
 
     requestAnimationFrame(render);
