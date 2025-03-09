@@ -62,6 +62,8 @@ function drawScene(gl, programInfo, buffers, texture, cubeRotation) {
 
   setTextureAttribute(gl, buffers, programInfo);
 
+  setNormalAttribute(gl, buffers, programInfo);
+
   // Tell WebGL which indices to use to index the vertices
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);
 
@@ -154,6 +156,29 @@ function setTextureAttribute(gl, buffers, programInfo) {
     offset
   );
   gl.enableVertexAttribArray(programInfo.attribLocations.textureCoord);
+}
+
+// Tell WebGL how to pull out the normals from
+// the normal buffer into the vertexNormal attribute.
+function setNormalAttribute(gl, buffers, programInfo) {
+  const numComponents = 3;
+  const type = gl.FLOAT;
+  const normalize = false;
+  const stride = 0;
+  const offset = 0;
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffers.normal);
+
+  gl.vertexAttribPointer(
+    programInfo.attribLocations.vertexNormal,
+    numComponents,
+    type,
+    normalize,
+    stride,
+    offset
+  );
+
+  gl.enableVertexAttribArray(programInfo.attribLocations.vertexNormal);
 }
 
 export { drawScene };
