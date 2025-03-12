@@ -85,6 +85,7 @@ function main() {
     program: shaderProgram,
     attribLocations: {
       vertexPosition: gl.getAttribLocation(shaderProgram, "aVertexPosition"),
+      vertexNormal: gl.getAttribLocation(shaderProgram, "aVertexNormal"),
       textureCoord: gl.getAttribLocation(shaderProgram, "aTextureCoord"),
     },
     uniformLocations: {
@@ -93,6 +94,7 @@ function main() {
         "uProjectionMatrix"
       ),
       modelViewMatrix: gl.getUniformLocation(shaderProgram, "uModelViewMatrix"),
+      normalMatrix: gl.getUniformLocation(shaderProgram, "uNormalMatrix"),
       uSampler: gl.getUniformLocation(shaderProgram, "uSampler"),
     },
   };
