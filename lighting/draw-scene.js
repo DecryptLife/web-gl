@@ -56,6 +56,10 @@ function drawScene(gl, programInfo, buffers, texture, cubeRotation) {
     [1, 0, 0]
   ); // axis to rotate around (X)
 
+  const normalMatrix = mat4.create();
+  mat4.invert(normalMatrix, modelViewMatrix);
+  mat4.transpose(normalMatrix, normalMatrix);
+
   // Tell WebGL how to pull out the positions from the position
   // buffer into the vertexPosition attribute.
   setPositionAttribute(gl, buffers, programInfo);
@@ -80,6 +84,12 @@ function drawScene(gl, programInfo, buffers, texture, cubeRotation) {
     programInfo.uniformLocations.modelViewMatrix,
     false,
     modelViewMatrix
+  );
+
+  gl.uniformMatrix4fv(
+    programInfo.uniformLocations.normalMatrix,
+    false,
+    normalMatrix
   );
 
   // tell webGL we want to affect texture unit 0
