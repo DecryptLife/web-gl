@@ -4,6 +4,8 @@ import { drawScene } from "./draw-scene.js";
 let cubeRotation = 0.0;
 let deltaTime = 0;
 
+// will set to true when video can be copied to texture
+let copyVideo = false;
 main();
 
 //
