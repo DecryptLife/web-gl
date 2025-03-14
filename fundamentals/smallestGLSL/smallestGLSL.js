@@ -1,15 +1,20 @@
 const canvas = document.querySelector("#glcanvas");
 const gl = canvas.getContext("webgl");
 
+gl.clearColor(1, 0.5, 0.2, 0.5);
+gl.clear(gl.COLOR_BUFFER_BIT);
+
 const vsGLSL = `
     void main() {
-    
+        gl_Position = vec4(0, 0, 0, 1);
+        gl_PointSize = 100.0;
     }
 `;
 
 const fsGLSL = `
+    precision highp float;
     void main() {
-    
+        gl_FragColor = vec4(1, 0.5, 0, 1);
     }
 `;
 
@@ -22,7 +27,19 @@ if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
 
 const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
 gl.shaderSource(fragmentShader, fsGLSL);
-gs.compileShader(fragmentShader);
-if (!gl.getShaderParameter(gl.COMPILE_STATUS)) {
+gl.compileShader(fragmentShader);
+if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
   throw new Error(gl.getShaderInfoLog(fragmentShader));
 }
+
+const prg = gl.createProgram();
+gl.attachShader(prg, vertexShader);
+gl.attachShader(prg, fragmentShader);
+gl.linkProgram(prg);
+if (!gl.getProgramParameter(prg, gl.LINK_STATUS)) {
+  throw new Error(gl.getProgramInfoLog(prg));
+}
+
+gl.useProgram(prg);
+
+gl.drawArrays(gl.POINTS, 2, 1);
