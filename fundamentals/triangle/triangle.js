@@ -3,9 +3,9 @@ const canvas = document.querySelector("#glcanvas");
 const gl = canvas.getContext("webgl");
 
 const vsGLSL = `
+    attribute vec4 position;
     void main(){
-        gl_Position = vec4(1,0,0, 1);
-        gl_PointSize = 50.0;
+        gl_Position = position;
     }
 `;
 
@@ -38,6 +38,24 @@ if (!gl.getProgramParameter(prg, gl.LINK_STATUS)) {
   throw new Error(gl.getProgramInfoLog(prg));
 }
 
+const positionLoc = gl.getAttribLocation(prg, "position");
+
+const vertexPositions = new Float32Array([0, 0.7, 0.5, -0.7, -0.5, -0.7]);
+
+const positionBuffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+gl.bufferData(gl.ARRAY_BUFFER, vertexPositions, gl.STATIC_DRAW);
+
+gl.enableVertexAttribArray(positionLoc);
+gl.vertexAttribPointer(
+  positionLoc,
+  2, // 2 values per vertex shader iteration
+  gl.FLOAT, // data is 32bit floats
+  false, // don't normalize
+  0, // stride (0 = auto)
+  0 // offset into buffer
+);
+
 gl.useProgram(prg);
 
-gl.drawArrays(gl.POINTS, 0, 1);
+gl.drawArrays(gl.TRIANGLES, 0, 3);
