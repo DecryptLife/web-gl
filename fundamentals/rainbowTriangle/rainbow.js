@@ -16,13 +16,18 @@ const fsGLSL = `
 `;
 
 const vertexShader = gl.createShader();
-gl.shaderSource(gl.VERTEX_SHADER, vertexShader);
+gl.shaderSource(vertexShader, vsGLSL);
 gl.compileShader(vertexShader);
 if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
   throw new Error(gl.getShaderInfoLog(vertexShader));
 }
 
 const fragmentShader = gl.fragmentShader();
+gl.shaderSource(fragmentShader, fsGLSL);
+gl.compileShader(fragmentShader);
+if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
+  throw new Error(gl.getShaderInfoLog(fragmentShader));
+}
 
 const prg = gl.createProgram();
 
