@@ -16,6 +16,11 @@ const fsGLSL = `
 `;
 
 const vertexShader = gl.createShader();
+gl.shaderSource(gl.VERTEX_SHADER, vertexShader);
+gl.compileShader(vertexShader);
+if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
+  throw new Error(gl.getShaderInfoLog(vertexShader));
+}
 
 const fragmentShader = gl.fragmentShader();
 
