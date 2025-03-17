@@ -54,7 +54,7 @@ const createShader = (gl, type, glsl) => {
   return shader;
 };
 
-const createProgram = (gl, prg, vsGLSL, fsGLSL) => {
+const compileShaderAndLinkProgram = (gl, prg, vsGLSL, fsGLSL) => {
   const vertexShader = createShader(gl, prg, vsGLSL);
   const fragmentShader = createShader(gl, prg, fsGLSL);
 
@@ -69,14 +69,16 @@ const createProgram = (gl, prg, vsGLSL, fsGLSL) => {
 };
 
 const prg1 = gl.createProgram();
-gl.attachShader(prg1, vertexShader1);
-gl.attachShader(prg1, fragmentShader1);
-gl.linkProgram(prg1);
+compileShaderAndLinkProgram(gl, prg1, vsGLSL1, fsGLSL1);
+const prog1Locs = {
+  position: gl.getAttribLocation(prg1, "aPosition"),
+};
 
 const prg2 = gl.createProgram();
-gl.attachShader(prg2, vertexShader2);
-gl.attachShader(prg2, fragmentShader2);
-gl.linkProgram(prg2);
+compileShaderAndLinkProgram(gl, prg2, vsGLSL2, fsGLSL2);
+const prog2Locs = {
+  position: gl.getAttribLocation(prg2, "aPosition"),
+};
 
 const vertexPositions1 = new Float32Array([
   -0.4, 0.3,
