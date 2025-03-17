@@ -50,9 +50,23 @@ const createShader = (gl, type, glsl) => {
   if (!gl.getShaderParameter(gl.COMPILE_STATUS)) {
     throw new Error(gl.getShaderInfoLog(shader));
   }
+
+  return shader;
 };
 
-const createProgram = (gl, prg, vsGLSL, fsGLSL) => {};
+const createProgram = (gl, prg, vsGLSL, fsGLSL) => {
+  const vertexShader = createShader(gl, prg, vsGLSL);
+  const fragmentShader = createShader(gl, prg, fsGLSL);
+
+  gl.attachShader(vertexShader);
+  gl.attachShader(fragmentShader);
+  gl.linkProgram(prg);
+
+  if (!gl.getProgramParameter(prg, gl.LINK_STATUS)) {
+    throw new Error(gl.getProgramInfoLog(prg));
+  }
+  return prg;
+};
 
 const prg1 = gl.createProgram();
 gl.attachShader(prg1, vertexShader1);
