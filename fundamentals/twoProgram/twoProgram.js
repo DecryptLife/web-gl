@@ -47,7 +47,7 @@ const createShader = (gl, type, glsl) => {
   const shader = gl.createShader(type);
   gl.shaderSource(shader, glsl);
   gl.compileShader(shader);
-  if (!gl.getShaderParameter(gl.COMPILE_STATUS)) {
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
     throw new Error(gl.getShaderInfoLog(shader));
   }
 
@@ -55,11 +55,11 @@ const createShader = (gl, type, glsl) => {
 };
 
 const compileShaderAndLinkProgram = (gl, prg, vsGLSL, fsGLSL) => {
-  const vertexShader = createShader(gl, prg, vsGLSL);
-  const fragmentShader = createShader(gl, prg, fsGLSL);
+  const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsGLSL);
+  const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsGLSL);
 
-  gl.attachShader(vertexShader);
-  gl.attachShader(fragmentShader);
+  gl.attachShader(prg, vertexShader);
+  gl.attachShader(prg, fragmentShader);
   gl.linkProgram(prg);
 
   if (!gl.getProgramParameter(prg, gl.LINK_STATUS)) {
@@ -116,28 +116,20 @@ const prog2VertexPositions = new Float32Array([
   0.5, -0.4,
 ]);
 
-const positionLoc = gl.getAttribLocation(prg1, "aPosition");
+const position1Buffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, position1Buffer);
+gl.bufferData(gl.ARRAY_BUFFER, prog1VertexPositions, gl.STATIC_DRAW);
 
-const positionBuffer = gl.createBuffer();
-gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-gl.bufferData(gl.ARRAY_BUFFER, vertexPositions1, gl.STATIC_DRAW);
+const position2Buffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, position2Buffer);
+gl.bufferData(gl.ARRAY_BUFFER, prog2VertexPositions, gl.STATIC_DRAW);
 
-gl.enableVertexAttribArray(positionLoc);
-gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0);
-
-const positionLoc2 = gl.getAttribLocation(prg2, "aPosition");
-
-const positionBuffer2 = gl.createBuffer();
-gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer2);
-gl.bufferData(gl.ARRAY_BUFFER, vertexPositions2, gl.STATIC_DRAW);
-
-gl.enableVertexAttribArray(positionLoc2);
-gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-gl.vertexAttribPointer(positionLoc2, 2, gl.FLOAT, false, 0, 0);
+gl.bindBuffer(gl.ARRAY_BUFFER, position1Buffer);
+gl.enableVertexAttribArray(prog1Locs.position);
+gl.vertexAttribPointer(prog1Locs.position, 2, gl.FLOAT, false, 0, 0);
 
 gl.useProgram(prg1);
-gl.useProgram(prg2);
 
 gl.drawArrays(gl.POINTS, 0, 12);
-gl.drawArrays(gl.POINTS, 0, 9);
+
+// Second program
