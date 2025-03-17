@@ -4,21 +4,17 @@ const gl = canvas.getContext("webgl");
 
 const vsGLSL = `
     attribute vec4 aPosition;
-    attribute vec4 aColor;
-
-    varying vec4 v_color;
     void main() {
         gl_Position = aPosition;
-        v_color = aColor;
+        gl_PointSize = 10.0;
     }
 `;
 
 const fsGLSL = `
     precision highp float;
 
-    varying vec4 v_color;
     void main() {
-        gl_FragColor = v_color;
+        gl_FragColor = vec4(1.0, 0.5, 0.0 , 1.0);
 
     }
 `;
@@ -42,7 +38,15 @@ gl.attachShader(prg, vertexShader);
 gl.attachShader(prg, fragmentShader);
 gl.linkProgram(prg);
 
-const vertexPositions = new Float32Array([0, 0.7, -0.5, -0.7, 0.5, -0.7]);
+const vertexPositions = new Float32Array([
+  0.0, 0.8, 0.0, -0.4,
+
+  -0.2, 0.6, 0.2, 0.6, -0.2, -0.2, 0.2, -0.2,
+
+  -0.4, 0.4, 0.4, 0.4, -0.4, 0.0, 0.4, 0.0,
+
+  -0.6, 0.2, 0.6, 0.2,
+]);
 
 const positionLoc = gl.getAttribLocation(prg, "aPosition");
 
@@ -50,24 +54,10 @@ const positionBuffer = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 gl.bufferData(gl.ARRAY_BUFFER, vertexPositions, gl.STATIC_DRAW);
 
-const vertexColors = new Uint8Array([
-  255, 0, 0, 255, 0, 255, 0, 255, 0, 0, 255, 255,
-]);
-
-const colorLoc = gl.getAttribLocation(prg, "aColor");
-
-const colorBuffer = gl.createBuffer();
-gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-gl.bufferData(gl.ARRAY_BUFFER, vertexColors, gl.STATIC_DRAW);
-
 gl.enableVertexAttribArray(positionLoc);
 gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0);
 
-gl.enableVertexAttribArray(colorLoc);
-gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-gl.vertexAttribPointer(colorLoc, 2, gl.UNSIGNED_BYTE, true, 0, 0);
-
 gl.useProgram(prg);
 
-gl.drawArrays(gl.TRIANGLES, 0, 3);
+gl.drawArrays(gl.POINTS, 0, 12);
