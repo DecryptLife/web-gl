@@ -43,37 +43,16 @@ const fsGLSL2 = `
   }
 `;
 
-const vertexShader1 = gl.createShader(gl.VERTEX_SHADER);
-const vertexShader2 = gl.createShader(gl.VERTEX_SHADER);
+const createShader = (gl, type, glsl) => {
+  const shader = gl.createShader(type);
+  gl.shaderSource(shader, glsl);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(gl.COMPILE_STATUS)) {
+    throw new Error(gl.getShaderInfoLog(shader));
+  }
+};
 
-gl.shaderSource(vertexShader1, vsGLSL1);
-gl.shaderSource(vertexShader2, vsGLSL2);
-
-gl.compileShader(vertexShader1);
-gl.compileShader(vertexShader2);
-
-if (!gl.getShaderParameter(vertexShader1, gl.COMPILE_STATUS)) {
-  throw new Error(gl.getShaderInfoLog(vertexShader1));
-}
-
-if (!gl.getShaderParameter(vertexShader2, gl.COMPILE_STATUS)) {
-  throw new Error(gl.getShaderInfoLog(vertexShader2));
-}
-
-const fragmentShader1 = gl.createShader(gl.FRAGMENT_SHADER);
-const fragmentShader2 = gl.createShader(gl.FRAGMENT_SHADER);
-
-gl.shaderSource(fragmentShader1, fsGLSL1);
-gl.shaderSource(fragmentShader2, fsGLSL2);
-
-gl.compileShader(fragmentShader1);
-gl.compileShader(fragmentShader2);
-if (!gl.getShaderParameter(fragmentShader1, gl.COMPILE_STATUS)) {
-  throw new Error(gl.getShaderInfoLog(fragmentShader1));
-}
-if (!gl.getShaderParameter(fragmentShader2, gl.COMPILE_STATUS)) {
-  throw new Error(gl.getShaderInfoLog(fragmentShader2));
-}
+const createProgram = (gl, prg, vsGLSL, fsGLSL) => {};
 
 const prg1 = gl.createProgram();
 gl.attachShader(prg1, vertexShader1);
