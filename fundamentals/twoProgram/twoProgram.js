@@ -80,7 +80,7 @@ const prog2Locs = {
   position: gl.getAttribLocation(prg2, "aPosition"),
 };
 
-const vertexPositions1 = new Float32Array([
+const prog1VertexPositions = new Float32Array([
   -0.4, 0.3,
 
   -0.5, 0.2, -0.3, 0.2,
@@ -96,17 +96,7 @@ const vertexPositions1 = new Float32Array([
   -0.4, -0.3,
 ]);
 
-const positionLoc = gl.getAttribLocation(prg1, "aPosition");
-
-const positionBuffer = gl.createBuffer();
-gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-gl.bufferData(gl.ARRAY_BUFFER, vertexPositions1, gl.STATIC_DRAW);
-
-gl.enableVertexAttribArray(positionLoc);
-gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0);
-
-const vertexPositions2 = new Float32Array([
+const prog2VertexPositions = new Float32Array([
   0.5, 0.4,
 
   0.5, 0.2,
@@ -125,6 +115,16 @@ const vertexPositions2 = new Float32Array([
 
   0.5, -0.4,
 ]);
+
+const positionLoc = gl.getAttribLocation(prg1, "aPosition");
+
+const positionBuffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+gl.bufferData(gl.ARRAY_BUFFER, vertexPositions1, gl.STATIC_DRAW);
+
+gl.enableVertexAttribArray(positionLoc);
+gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0);
 
 const positionLoc2 = gl.getAttribLocation(prg2, "aPosition");
 
