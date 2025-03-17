@@ -97,23 +97,31 @@ const prog1VertexPositions = new Float32Array([
 ]);
 
 const prog2VertexPositions = new Float32Array([
-  0.5, 0.4,
+  0.5, 0.3,
 
   0.5, 0.2,
 
-  0.5, 0,
+  0.5, 0.1,
 
-  0.7, 0,
+  0.4, 0,
 
   0.3, 0,
 
-  0.1, 0,
+  0.2, 0,
 
-  0.9, 0,
+  0.5, 0,
+
+  0.6, 0,
+
+  0.7, 0,
+
+  0.8, 0,
+
+  0.5, -0.1,
 
   0.5, -0.2,
 
-  0.5, -0.4,
+  0.5, -0.3,
 ]);
 
 const position1Buffer = gl.createBuffer();
@@ -133,3 +141,10 @@ gl.useProgram(prg1);
 gl.drawArrays(gl.POINTS, 0, 12);
 
 // Second program
+gl.bindBuffer(gl.ARRAY_BUFFER, position2Buffer);
+gl.enableVertexAttribArray(prog2Locs.position);
+gl.vertexAttribPointer(prog2Locs.position, 2, gl.FLOAT, false, 0, 0);
+
+gl.useProgram(prg2);
+
+gl.drawArrays(gl.POINTS, 0, 13);
