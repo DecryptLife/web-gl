@@ -16,9 +16,9 @@ const vsGLSL1 = `
 const fsGLSL1 = `
     precision highp float;
 
+    uniform vec4 uColor;
     void main() {
-        gl_FragColor = vec4(1.0, 0.5, 0.0 , 1.0);
-
+        gl_FragColor = uColor;
     }
 `;
 
@@ -137,6 +137,8 @@ gl.enableVertexAttribArray(prog1Locs.position);
 gl.vertexAttribPointer(prog1Locs.position, 2, gl.FLOAT, false, 0, 0);
 
 gl.useProgram(prg1);
+
+gl.uniform4fv(prog1Locs.color, [1, 0.7, 0.5, 1]);
 
 gl.drawArrays(gl.POINTS, 0, 12);
 
