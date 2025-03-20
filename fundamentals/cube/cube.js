@@ -85,5 +85,8 @@ gl.useProgram(prg);
 gl.uniform4fv(offsetLoc, [0.5, 0, 0, 0]);
 gl.drawArrays(gl.TRIANGLES, 0, 3);
 
+gl.disableVertexAttribArray(colorLoc);
+gl.vertexAttrib4fv(colorLoc, [1.0, 0.3, 0.2, 1.0]);
+
 gl.uniform4fv(offsetLoc, [-0.5, 0, 0, 0]);
 gl.drawArrays(gl.TRIANGLES, 0, 3);
