@@ -1,11 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Draw Cube</title>
-    <meta charset="utf-8" />
-    <script src="cube.js" type="module"></script>
-  </head>
-  <body>
-    <canvas id="glcanvas" width="800" height="800"></canvas>
-  </body>
-</html>
+const canvas = document.querySelector("#glcanvas");
+
+const gl = canvas.getContext("webgl");
+
+const vsGLSL = `
+    attribute vec4 aPosition;
+    attribute vec4 aColor;
+
+    uniform vec4 uOffset;
+
+    varying vec4 vColor;
+    void main() {
+        gl_Position = aPosition + uOffset;
+
+    }
+`;
+
+const fsGLSL = `
+    void main() {
+    
+    }
+`;
