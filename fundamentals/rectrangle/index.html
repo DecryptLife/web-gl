@@ -4,19 +4,16 @@
     <meta charset="UTF-8" />
     <title>WebGL Rectangle</title>
     <script src="index.js" type="module"></script>
-    <style>
-      body {
-        margin: 0;
-      }
-      canvas {
-        display: block;
-        width: 400px;
-        height: 300px;
-      }
-    </style>
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <canvas id="c" width="400" height="300"></canvas>
+    <div id="uiContainer">
+      <canvas id="canvas" width="400" height="300"></canvas>
+      <div id="ui">
+        <div id="x"></div>
+        <div id="y"></div>
+      </div>
+    </div>
     <script id="vertex-shader-2d" type="notjs">
       attribute vec4 a_position;
 
@@ -44,5 +41,6 @@
       }
     </script>
     <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+    <script src="https://webglfundamentals.org/webgl/resources/webgl-lessons-ui.js"></script>
   </body>
 </html>
