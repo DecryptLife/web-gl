@@ -29,8 +29,8 @@ function main() {
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
   var translation = [0, 0];
-  var width = 100;
-  var height = 30;
+  var width = 50;
+  var height = 50;
   var color = [Math.random(), Math.random(), Math.random(), 1];
 
   drawScene();
@@ -71,6 +71,7 @@ function main() {
     // Bind the position buffer.
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
+    console.log("Test 1.2 translation: ", translation);
     // Setup a rectangle
     setRectangle(gl, translation[0], translation[1], width, height);
 
@@ -109,11 +110,27 @@ function setRectangle(gl, x, y, width, height) {
   const x2 = x + width;
   const y1 = y;
   const y2 = y + height;
+
+  console.log(`Test 1.2 x1: ${x1} x2: ${x2} y1: ${y1} y2: ${y2}`);
   gl.bufferData(
     gl.ARRAY_BUFFER,
-    new Float32Array([x1, y1, x2, y1, x1, y2, x1, y2, x2, y1, x2, y2]),
+    new Float32Array([
+      x2,
+      y1,
+      x1,
+      y2,
+      x2 + 50,
+      y2,
+      x1,
+      y2,
+      x2 + 50,
+      y2,
+      x2,
+      y2 + 50,
+    ]),
     gl.STATIC_DRAW
   );
 }
 
+0, 50, 100, 50, 50, 100;
 main();

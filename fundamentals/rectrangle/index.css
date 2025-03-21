@@ -1,6 +1,6 @@
 @import url("https://webglfundamentals.org/webgl/resources/webgl-tutorials.css");
 body {
-  margin: 0;
+  /* margin: 0; */
   display: flex;
 
   width: 100vw;
