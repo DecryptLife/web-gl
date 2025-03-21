@@ -44,10 +44,18 @@ function main() {
     slide: updatePosition(1),
     max: gl.canvas.height,
   });
+  webglLessonsUI.setupSlider("#xy", {
+    slide: updatePosition(2),
+    max: Math.min(gl.canvas.width, gl.canvas.height),
+  });
 
   function updatePosition(index) {
     return function (event, ui) {
-      translation[index] = ui.value;
+      if (index !== 2) translation[index] = ui.value;
+      else {
+        translation[0] = ui.value;
+        translation[1] = ui.value;
+      }
       drawScene();
     };
   }
@@ -131,6 +139,4 @@ function setRectangle(gl, x, y, width, height) {
     gl.STATIC_DRAW
   );
 }
-
-0, 50, 100, 50, 50, 100;
 main();
