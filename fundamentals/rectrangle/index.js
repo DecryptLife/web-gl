@@ -53,8 +53,8 @@ function main() {
     return function (event, ui) {
       if (index !== 2) translation[index] = ui.value;
       else {
-        translation[0] = ui.value;
-        translation[1] = ui.value;
+        translation[0] += ui.value;
+        translation[1] += ui.value;
       }
       drawScene();
     };
