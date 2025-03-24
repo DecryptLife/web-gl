@@ -86,7 +86,7 @@ function main() {
     const type = gl.FLOAT; // the data is 32bit floats
     const normalize = false; // don't normalize the data
     const stride = 0; // 0 = move forward size * sizeof(type) each iteration to get the next position
-    const offset = 0; // start at the beginning of the buffer
+    let offset = 0; // start at the beginning of the buffer
     gl.vertexAttribPointer(
       positionLocation,
       size,
@@ -104,7 +104,7 @@ function main() {
 
     // Draw the rectangle.
     var primitiveType = gl.TRIANGLES;
-    var offset = 0;
+    offset = 0;
     var count = 6;
     gl.drawArrays(primitiveType, offset, count);
   }
