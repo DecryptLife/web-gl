@@ -82,11 +82,11 @@ function main() {
     setRectangle(gl, translation[0], translation[1], width, height);
 
     // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
-    var size = 2; // 2 components per iteration
-    var type = gl.FLOAT; // the data is 32bit floats
-    var normalize = false; // don't normalize the data
-    var stride = 0; // 0 = move forward size * sizeof(type) each iteration to get the next position
-    var offset = 0; // start at the beginning of the buffer
+    const size = 2; // 2 components per iteration
+    const type = gl.FLOAT; // the data is 32bit floats
+    const normalize = false; // don't normalize the data
+    const stride = 0; // 0 = move forward size * sizeof(type) each iteration to get the next position
+    const offset = 0; // start at the beginning of the buffer
     gl.vertexAttribPointer(
       positionLocation,
       size,
