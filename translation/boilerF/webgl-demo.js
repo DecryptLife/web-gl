@@ -14,10 +14,16 @@ function main() {
   }
 
   const vsGLSL = `
-    attribute vec4 aPosition;
+    attribute vec2 aPosition;
+
+    uniform vec2 uResolution;
 
     void main() {
-        gl_Position = aPosition;
+        vec2 zeroToOne = aPosition/uResolution;
+        vec2 zeroToTwo = zeroToOne * 2.0;
+        vec2 clipSpace = zeroToTwo - 1.0;
+
+        gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
     }
   `;
 
@@ -34,6 +40,9 @@ function main() {
     program: shaderProgram,
     attribLocations: {
       vertexPosition: gl.getAttribLocation(shaderProgram, "aPosition"),
+    },
+    uniformLocations: {
+      uniformResolution: gl.getUniformLocation(shaderProgram, "uResolution"),
     },
   };
 

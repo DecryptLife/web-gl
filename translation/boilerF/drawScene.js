@@ -3,6 +3,9 @@ function drawScene(gl, programInfo, buffers) {
 
   gl.useProgram(programInfo.program);
 
+  const uResolutionLocation = programInfo.uniformLocations.uniformResolution;
+  gl.uniform2f(uResolutionLocation, gl.canvas.width, gl.canvas.height);
+
   gl.drawArrays(gl.TRIANGLES, 0, 18);
 }
 
