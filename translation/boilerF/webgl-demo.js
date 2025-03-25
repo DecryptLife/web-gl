@@ -1,3 +1,6 @@
+import { initBuffers } from "./initBuffer.js";
+import { drawScene } from "./drawScene.js";
+
 main();
 
 function main() {
@@ -26,6 +29,17 @@ function main() {
   `;
 
   const shaderProgram = initShaderProgram(gl, vsGLSL, fsGLSL);
+
+  const programInfo = {
+    program: shaderProgram,
+    attribLocations: {
+      vertexPosition: gl.getAttribLocation(shaderProgram, "aPosition"),
+    },
+  };
+
+  const buffers = initBuffers(gl);
+
+  drawScene(gl, programInfo, buffers);
 }
 
 function initShaderProgram(gl, vsGLSL, fsGLSL) {

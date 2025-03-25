@@ -11,7 +11,19 @@ function initPositionBuffer(gl) {
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
-  const vertexPositions = [0.0, 0.4, 0.4, 0.4, 0.0, 0.3];
+  const vertexPositions = [
+    0.0, 0.4, 0.4, 0.4, 0.0, 0.3,
+
+    0.0, 0.3, 0.4, 0.4, 0.4, 0.3,
+
+    0.0, 0.3, 0.1, 0.3, 0.0, -0.4,
+
+    0.1, 0.3, 0.0, -0.4, 0.1, -0.4,
+
+    0.1, 0.1, 0.4, 0.1, 0.4, 0.0,
+
+    0.1, 0.1, 0.1, 0.0, 0.4, 0.0,
+  ];
 
   gl.bufferData(
     gl.ARRAY_BUFFER,
@@ -21,3 +33,5 @@ function initPositionBuffer(gl) {
 
   return positionBuffer;
 }
+
+export { initBuffers };
