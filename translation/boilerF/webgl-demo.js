@@ -8,9 +8,7 @@ function main() {
   const gl = canvas.getContext("webgl");
 
   if (gl === null) {
-    alert(
-      "Unable to initialize WebGL. Your browser or machine does not support it"
-    );
+    alert("Unable to initialize WebGL. Browser or machine does not support it");
   }
 
   const vsGLSL = `
