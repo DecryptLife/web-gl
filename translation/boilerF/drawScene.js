@@ -6,7 +6,7 @@ function drawScene(gl, programInfo, buffers) {
   const uResolutionLocation = programInfo.uniformLocations.uniformResolution;
   gl.uniform2f(uResolutionLocation, gl.canvas.width, gl.canvas.height);
 
-  gl.drawArrays(gl.TRIANGLES, 0, 18);
+  gl.drawArrays(gl.TRIANGLES, 3, 18);
 }
 
 function setPositionAttribute(gl, programInfo, buffers) {
