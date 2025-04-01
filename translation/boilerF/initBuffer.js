@@ -39,46 +39,19 @@ function initPositionBuffer(gl, x, y) {
     gl.ARRAY_BUFFER,
     new Float32Array([
       // left column
-      x,
-      y,
-      x + thickness,
-      y,
-      x,
-      y + height,
-      x,
-      y + height,
-      x + thickness,
-      y,
-      x + thickness,
-      y + height,
+      0, 0, 30, 0, 0, 150,
+
+      30, 0, 0, 150, 30, 150,
 
       // top rung
-      x + thickness,
-      y,
-      x + width,
-      y,
-      x + thickness,
-      y + thickness,
-      x + thickness,
-      y + thickness,
-      x + width,
-      y,
-      x + width,
-      y + thickness,
+      30, 0, 100, 0, 30, 30,
+
+      30, 30, 100, 0, 100, 30,
 
       // middle rung
-      x + thickness,
-      y + thickness * 2,
-      x + (width * 2) / 3,
-      y + thickness * 2,
-      x + thickness,
-      y + thickness * 3,
-      x + thickness,
-      y + thickness * 3,
-      x + (width * 2) / 3,
-      y + thickness * 2,
-      x + (width * 2) / 3,
-      y + thickness * 3,
+      30, 60, 70, 60, 30, 90,
+
+      70, 60, 30, 90, 70, 90,
     ]),
     gl.STATIC_DRAW
   );

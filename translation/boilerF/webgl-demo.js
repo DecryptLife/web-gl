@@ -7,6 +7,34 @@ function main() {
   const canvas = document.querySelector("#glcanvas");
   const gl = canvas.getContext("webgl");
 
+  const xPlus = document.querySelector("#x-plus");
+  const xMinus = document.querySelector("#x-minus");
+  const yPlus = document.querySelector("#y-plus");
+  const yMinus = document.querySelector("#y-minus");
+
+  let xEle = document.querySelector("#x-value");
+  let yEle = document.querySelector("#y-value");
+
+  xPlus.addEventListener("click", () => {
+    let xVal = parseInt(xEle.value);
+    xEle.value = xVal + 1;
+  });
+
+  xMinus.addEventListener("click", () => {
+    let xVal = parseInt(xEle.value);
+    xEle.value = xVal - 1;
+  });
+
+  yPlus.addEventListener("click", () => {
+    let yVal = parseInt(yEle.value);
+    yEle.value = yVal + 1;
+  });
+
+  yMinus.addEventListener("click", () => {
+    let yVal = parseInt(yEle.value);
+    yEle.value = yVal - 1;
+  });
+
   if (gl === null) {
     alert("Unable to initialize WebGL. Browser / machine does not support it");
   }
@@ -15,9 +43,12 @@ function main() {
     attribute vec2 aPosition;
 
     uniform vec2 uResolution;
+    uniform vec2 uTranslation;
 
     void main() {
-        vec2 zeroToOne = aPosition/uResolution;
+        vec2 position = aPosition + uTranslation;
+
+        vec2 zeroToOne = position/uResolution;
         vec2 zeroToTwo = zeroToOne * 2.0;
         vec2 clipSpace = zeroToTwo - 1.0;
 
@@ -41,6 +72,7 @@ function main() {
     },
     uniformLocations: {
       uniformResolution: gl.getUniformLocation(shaderProgram, "uResolution"),
+      uniformTranslation: gl.getUniformLocation(shaderProgram, "uTranslation"),
     },
   };
 
