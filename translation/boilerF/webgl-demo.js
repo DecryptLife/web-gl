@@ -15,10 +15,12 @@ function main() {
 
   xSlider.addEventListener("input", (event) => {
     xValue.textContent = event.target.value;
+    updatePosition(0);
   });
 
   ySlider.addEventListener("input", (event) => {
     yValue.textContent = event.target.value;
+    updatePosition(1);
   });
 
   if (gl === null) {
@@ -62,9 +64,22 @@ function main() {
     },
   };
 
+  let translation = [
+    parseInt(xValue.textContent),
+    parseInt(yValue.textContent),
+  ];
+
+  function updatePosition(index) {
+    translation[index] =
+      index === 0 ? parseInt(xValue.textContent) : parseInt(yValue.textContent);
+    drawScene(gl, programInfo, buffers, translation);
+  }
+
+  console.log("Test 1.2 translation - ", translation);
+
   const buffers = initBuffers(gl);
 
-  drawScene(gl, programInfo, buffers);
+  drawScene(gl, programInfo, buffers, translation);
 }
 
 function initShaderProgram(gl, vsGLSL, fsGLSL) {

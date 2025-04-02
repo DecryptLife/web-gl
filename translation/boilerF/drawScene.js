@@ -1,10 +1,13 @@
-function drawScene(gl, programInfo, buffers) {
+function drawScene(gl, programInfo, buffers, translation) {
   setPositionAttribute(gl, programInfo, buffers);
 
   gl.useProgram(programInfo.program);
 
   const uResolutionLocation = programInfo.uniformLocations.uniformResolution;
+  const uTranslation = programInfo.uniformLocations.uniformTranslation;
   gl.uniform2f(uResolutionLocation, gl.canvas.width, gl.canvas.height);
+
+  gl.uniform2fv(uTranslation, translation);
 
   gl.drawArrays(gl.TRIANGLES, 0, 18);
 }
