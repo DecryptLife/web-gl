@@ -7,32 +7,18 @@ function main() {
   const canvas = document.querySelector("#glcanvas");
   const gl = canvas.getContext("webgl");
 
-  const xPlus = document.querySelector("#x-plus");
-  const xMinus = document.querySelector("#x-minus");
-  const yPlus = document.querySelector("#y-plus");
-  const yMinus = document.querySelector("#y-minus");
+  const xSlider = document.querySelector("#x-slider");
+  const ySlider = document.querySelector("#y-slider");
 
-  let xEle = document.querySelector("#x-value");
-  let yEle = document.querySelector("#y-value");
+  const xValue = document.querySelector("#x-value");
+  const yValue = document.querySelector("#y-value");
 
-  xPlus.addEventListener("click", () => {
-    let xVal = parseInt(xEle.value);
-    xEle.value = xVal + 1;
+  xSlider.addEventListener("input", (event) => {
+    xValue.textContent = event.target.value;
   });
 
-  xMinus.addEventListener("click", () => {
-    let xVal = parseInt(xEle.value);
-    xEle.value = xVal - 1;
-  });
-
-  yPlus.addEventListener("click", () => {
-    let yVal = parseInt(yEle.value);
-    yEle.value = yVal + 1;
-  });
-
-  yMinus.addEventListener("click", () => {
-    let yVal = parseInt(yEle.value);
-    yEle.value = yVal - 1;
+  ySlider.addEventListener("input", (event) => {
+    yValue.textContent = event.target.value;
   });
 
   if (gl === null) {

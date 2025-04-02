@@ -8,17 +8,21 @@
   <body style="display: flex">
     <canvas id="glcanvas" width="800" height="800"></canvas>
     <div style="display: flex; flex-direction: column; gap: 1rem">
-      <div>
-        X:
-        <button id="x-minus">-</button>
+      <div style="display: flex">
+        <!-- <button id="x-minus">-</button>
         <input id="x-value" type="number" style="width: 2rem" value="0" />
-        <button id="x-plus">+</button>
+        <button id="x-plus">+</button> -->
+        <p>X:</p>
+        <input id="x-slider" type="range" value="0" min="0" max="800" />
+        <p id="x-value">0</p>
       </div>
-      <div>
-        Y:
-        <button id="y-minus">-</button>
+      <div style="display: flex">
+        <!-- <button id="y-minus">-</button>
         <input id="y-value" type="number" style="width: 2rem" value="0" />
-        <button id="y-plus">+</button>
+        <button id="y-plus">+</button> -->
+        <p>Y:</p>
+        <input id="y-slider" type="range" value="0" min="0" max="800" />
+        <p id="y-value">0</p>
       </div>
     </div>
   </body>
