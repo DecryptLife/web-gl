@@ -1,9 +1,42 @@
 import { initBuffers } from "./initBuffer.js";
 import { drawScene } from "./drawScene.js";
 
-main();
+const loadShader = (gl, type, source) => {
+  const shader = gl.createShader(type);
 
-function main() {
+  gl.shaderSource(shader, source);
+
+  gl.compileShader(shader);
+
+  const compileStatus = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+
+  if (!compileStatus) {
+    throw new Error(gl.getShaderInfoLog(shader));
+  }
+
+  return shader;
+};
+
+const initShaderProgram = (gl, vsGLSL, fsGLSL) => {
+  const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsGLSL);
+  const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsGLSL);
+
+  const shaderProgram = gl.createProgram();
+
+  gl.attachShader(shaderProgram, vertexShader);
+  gl.attachShader(shaderProgram, fragmentShader);
+  gl.linkProgram(shaderProgram);
+
+  const linkStatus = gl.getProgramParameter(shaderProgram, gl.LINK_STATUS);
+
+  if (!linkStatus) {
+    throw new Error(gl.getProgramInfoLog(shaderProgram));
+  }
+
+  return shaderProgram;
+};
+
+const main = () => {
   const canvas = document.querySelector("#glcanvas");
   const gl = canvas.getContext("webgl");
 
@@ -69,50 +102,17 @@ function main() {
     parseInt(yValue.textContent),
   ];
 
-  function updatePosition(index) {
+  const updatePosition = (index) => {
     translation[index] =
       index === 0 ? parseInt(xValue.textContent) : parseInt(yValue.textContent);
     drawScene(gl, programInfo, buffers, translation);
-  }
+  };
 
   console.log("Test 1.2 translation - ", translation);
 
   const buffers = initBuffers(gl);
 
   drawScene(gl, programInfo, buffers, translation);
-}
+};
 
-function initShaderProgram(gl, vsGLSL, fsGLSL) {
-  const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsGLSL);
-  const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsGLSL);
-
-  const shaderProgram = gl.createProgram();
-
-  gl.attachShader(shaderProgram, vertexShader);
-  gl.attachShader(shaderProgram, fragmentShader);
-  gl.linkProgram(shaderProgram);
-
-  const linkStatus = gl.getProgramParameter(shaderProgram, gl.LINK_STATUS);
-
-  if (!linkStatus) {
-    throw new Error(gl.getProgramInfoLog(shaderProgram));
-  }
-
-  return shaderProgram;
-}
-
-function loadShader(gl, type, source) {
-  const shader = gl.createShader(type);
-
-  gl.shaderSource(shader, source);
-
-  gl.compileShader(shader);
-
-  const compileStatus = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
-
-  if (!compileStatus) {
-    throw new Error(gl.getShaderInfoLog(shader));
-  }
-
-  return shader;
-}
+main();
