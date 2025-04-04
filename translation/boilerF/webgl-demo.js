@@ -42,9 +42,11 @@ const main = () => {
 
   const xSlider = document.querySelector("#x-slider");
   const ySlider = document.querySelector("#y-slider");
+  const degSlider = document.querySelector("#degree-slider");
 
   const xValue = document.querySelector("#x-value");
   const yValue = document.querySelector("#y-value");
+  const degValue = document.querySelector("#degree-value");
 
   xSlider.addEventListener("input", (event) => {
     xValue.textContent = event.target.value;
@@ -54,6 +56,12 @@ const main = () => {
   ySlider.addEventListener("input", (event) => {
     yValue.textContent = event.target.value;
     updatePosition(1);
+  });
+
+  degSlider.addEventListener("input", (event) => {
+    const deg = parseInt(event.target.value);
+    degValue.textContent = Math.round(deg * 100) / 100;
+    updateRotation(deg);
   });
 
   if (gl === null) {
@@ -69,7 +77,7 @@ const main = () => {
 
     void main() {
         vec2 rotatedPosition = vec2(
-            aPosition.x * uRotation.y + aPosition.y * uRotation.x,
+           aPosition.x * uRotation.y + aPosition.y * uRotation.x,
             aPosition.y * uRotation.y - aPosition.x * uRotation.x
         );
 
@@ -109,10 +117,18 @@ const main = () => {
     parseInt(yValue.textContent),
   ];
 
-  let rotation = [0.29, 0.96];
+  let rotation = [0, 1];
   const updatePosition = (index) => {
     translation[index] =
       index === 0 ? parseInt(xValue.textContent) : parseInt(yValue.textContent);
+    drawScene(gl, programInfo, buffers, translation, rotation);
+  };
+
+  const updateRotation = (degree) => {
+    const angleInRadians = (-degree * Math.PI) / 180;
+    rotation[0] = Math.round(Math.sin(angleInRadians) * 100) / 100;
+    rotation[1] = Math.round(Math.cos(angleInRadians) * 100) / 100;
+    console.log("Test 1.2 rotation - ", rotation);
     drawScene(gl, programInfo, buffers, translation, rotation);
   };
 
