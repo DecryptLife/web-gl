@@ -65,9 +65,15 @@ const main = () => {
 
     uniform vec2 uResolution;
     uniform vec2 uTranslation;
+    uniform vec2 uRotation;
 
     void main() {
-        vec2 position = aPosition + uTranslation;
+        vec2 rotatedPosition = vec2(
+            aPosition.x * uRotation.y + aPosition.y * uRotation.x,
+            aPosition.y * uRotation.y - aPosition.x * uRotation.x
+        );
+
+        vec2 position = rotatedPosition + uTranslation;
 
         vec2 zeroToOne = position/uResolution;
         vec2 zeroToTwo = zeroToOne * 2.0;
