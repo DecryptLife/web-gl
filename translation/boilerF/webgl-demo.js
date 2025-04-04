@@ -100,6 +100,7 @@ const main = () => {
     uniformLocations: {
       uniformResolution: gl.getUniformLocation(shaderProgram, "uResolution"),
       uniformTranslation: gl.getUniformLocation(shaderProgram, "uTranslation"),
+      uniformRotation: gl.getUniformLocation(shaderProgram, "uRotation"),
     },
   };
 
@@ -108,17 +109,18 @@ const main = () => {
     parseInt(yValue.textContent),
   ];
 
+  let rotation = [0.29, 0.96];
   const updatePosition = (index) => {
     translation[index] =
       index === 0 ? parseInt(xValue.textContent) : parseInt(yValue.textContent);
-    drawScene(gl, programInfo, buffers, translation);
+    drawScene(gl, programInfo, buffers, translation, rotation);
   };
 
   console.log("Test 1.2 translation - ", translation);
 
   const buffers = initBuffers(gl);
 
-  drawScene(gl, programInfo, buffers, translation);
+  drawScene(gl, programInfo, buffers, translation, rotation);
 };
 
 main();
