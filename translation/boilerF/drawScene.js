@@ -13,7 +13,7 @@ const setPositionAttribute = (gl, programInfo, buffers) => {
   gl.enableVertexAttribArray(programInfo.attribLocations.vertexPosition);
 };
 
-const drawScene = (gl, programInfo, buffers, translation, rotation) => {
+const drawScene = (gl, programInfo, buffers, translation, rotation, scale) => {
   setPositionAttribute(gl, programInfo, buffers);
 
   gl.useProgram(programInfo.program);
@@ -21,10 +21,12 @@ const drawScene = (gl, programInfo, buffers, translation, rotation) => {
   const uResolutionLocation = programInfo.uniformLocations.uniformResolution;
   const uTranslationLocation = programInfo.uniformLocations.uniformTranslation;
   const uRotation = programInfo.uniformLocations.uniformRotation;
+  const uScale = programInfo.uniformLocations.uniformScale;
 
   gl.uniform2f(uResolutionLocation, gl.canvas.width, gl.canvas.height);
   gl.uniform2fv(uTranslationLocation, translation);
   gl.uniform2fv(uRotation, rotation);
+  gl.uniform2fv(uScale, scale);
 
   gl.drawArrays(gl.TRIANGLES, 0, 18);
 };

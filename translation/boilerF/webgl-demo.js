@@ -74,11 +74,14 @@ const main = () => {
     uniform vec2 uResolution;
     uniform vec2 uTranslation;
     uniform vec2 uRotation;
+    uniform vec2 uScale;
 
     void main() {
+        vec2 scaledPosition = aPosition * uScale;
+
         vec2 rotatedPosition = vec2(
-           aPosition.x * uRotation.y + aPosition.y * uRotation.x,
-            aPosition.y * uRotation.y - aPosition.x * uRotation.x
+           scaledPosition.x * uRotation.y + scaledPosition.y * uRotation.x,
+            scaledPosition.y * uRotation.y - scaledPosition.x * uRotation.x
         );
 
         vec2 position = rotatedPosition + uTranslation;
@@ -109,6 +112,7 @@ const main = () => {
       uniformResolution: gl.getUniformLocation(shaderProgram, "uResolution"),
       uniformTranslation: gl.getUniformLocation(shaderProgram, "uTranslation"),
       uniformRotation: gl.getUniformLocation(shaderProgram, "uRotation"),
+      uniformScale: gl.getUniformLocation(shaderProgram, "uScale"),
     },
   };
 
@@ -118,10 +122,11 @@ const main = () => {
   ];
 
   let rotation = [0, 1];
+  let scale = [3, 3];
   const updatePosition = (index) => {
     translation[index] =
       index === 0 ? parseInt(xValue.textContent) : parseInt(yValue.textContent);
-    drawScene(gl, programInfo, buffers, translation, rotation);
+    drawScene(gl, programInfo, buffers, translation, rotation, scale);
   };
 
   const updateRotation = (degree) => {
@@ -129,14 +134,14 @@ const main = () => {
     rotation[0] = Math.round(Math.sin(angleInRadians) * 100) / 100;
     rotation[1] = Math.round(Math.cos(angleInRadians) * 100) / 100;
     console.log("Test 1.2 rotation - ", rotation);
-    drawScene(gl, programInfo, buffers, translation, rotation);
+    drawScene(gl, programInfo, buffers, translation, rotation, scale);
   };
 
   console.log("Test 1.2 translation - ", translation);
 
   const buffers = initBuffers(gl);
 
-  drawScene(gl, programInfo, buffers, translation, rotation);
+  drawScene(gl, programInfo, buffers, translation, rotation, scale);
 };
 
 main();
