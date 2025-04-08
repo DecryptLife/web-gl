@@ -40,6 +40,47 @@ const main = () => {
     console.log("Machine or browser can't run web gl");
   }
 
+  const xSlider = document.querySelector("#x-slider");
+  const ySlider = document.querySelector("#y-slider");
+  const degSlider = document.querySelector("#degree-slider");
+  const xScaleSlider = document.querySelector("#xscale-slider");
+  const yScaleSlider = document.querySelector("#yscale-slider");
+
+  const xValue = document.querySelector("#x-value");
+  const yValue = document.querySelector("#y-value");
+  const degValue = document.querySelector("#degree-value");
+  const xScaleValue = document.querySelector("#xscale-value");
+  const yScaleValue = document.querySelector("#yscale-value");
+
+  xSlider.addEventListener("input", (event) => {
+    xValue.textContent = event.target.value;
+    console.log("xval - ", xValue.textContent);
+    updatePosition(0);
+  });
+
+  ySlider.addEventListener("input", (event) => {
+    yValue.textContent = event.target.value;
+    updatePosition(1);
+  });
+
+  degSlider.addEventListener("input", (event) => {
+    const deg = parseInt(event.target.value);
+    degValue.textContent = Math.round(deg * 100) / 100;
+    updateRotation(deg);
+  });
+
+  xScaleSlider.addEventListener("input", (event) => {
+    const x_val = event.target.value;
+    xScaleValue.textContent = x_val;
+    updateScale(0, x_val);
+  });
+
+  yScaleSlider.addEventListener("input", (event) => {
+    const y_val = event.target.value;
+    yScaleValue.textContent = y_val;
+    updateScale(1, y_val);
+  });
+
   const vsGLSL = `
         attribute vec2 aPosition;
 
@@ -75,6 +116,29 @@ const main = () => {
       uniformRotation: gl.getUniformLocation(shaderProgram, "uRotation"),
       uniformScale: gl.getUniformLocation(shaderProgram, "uScale"),
     },
+  };
+
+  const updatePosition = (index) => {
+    translation[index] =
+      index === 0 ? parseInt(xValue.textContent) : parseInt(yValue.textContent);
+    drawScene(gl, programInfo, buffers, translation, rotation, scale);
+  };
+
+  const updateRotation = (degree) => {
+    const angleInRadians = (-degree * Math.PI) / 180;
+    rotation[0] = Math.round(Math.sin(angleInRadians) * 100) / 100;
+    rotation[1] = Math.round(Math.cos(angleInRadians) * 100) / 100;
+    console.log("Test 1.2 rotation - ", rotation);
+    drawScene(gl, programInfo, buffers, translation, rotation, scale);
+  };
+
+  const updateScale = (index, scaleValue) => {
+    if (index === 0) {
+      scale[0] = scaleValue;
+    } else {
+      scale[1] = scaleValue;
+    }
+    drawScene(gl, programInfo, buffers, translation, rotation, scale);
   };
 
   const buffers = initBuffers(gl);
